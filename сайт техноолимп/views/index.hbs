@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Макет кота</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" defer></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" defer></script>
+<link rel="stylesheet" type="text/css" href="chat.css">
+</head>
+
+<body>
+
+
+<nav class="main navbar navbar-expand-lg navbar-light bg-light">
+  <a class="main navbar-brand" href="/"> &nbsp; &nbsp;Главная</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="/contact">Контакты разработчиков</a>
+      </li>
+      {{#if admin_view}}
+      <li class="nav-item">
+        <a class="nav-link" href="/user_view">Пользователи</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/dron_view">Состояние дронов</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user_view_archive">Архив пользователей</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/dron_view_archive">Архив дронов</a>
+      </li>
+        {{/if}}
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+    <div class="header-container container">
+        <div class="my-3 text-center">
+            
+        </div>
+
+    </div>
+    <div class="app-container container">
+        <div class="row">
+
+
+{{#if dronm}}
+                <div class="col">
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <p>&nbsp;время доcтавки заказа: {{dronm.time}} мин</p>
+                    <a class="btn btn-lb" href="/dron_success?id={{dronm._id}}" role="button">Заказ получен</a>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+                {{#if thank}}
+                <div class="col">
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <p>&nbsp;Спасибо за заказ, будем рады видеть вас снова</p>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+
+
+{{#if user}}
+
+            {{!-- Список DONE --}}
+            <div class="col ">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- Название списка --}}
+                        <h5 class="card-title mb-3">
+                            &nbsp;Пользователи
+                        </h5>
+
+                        <div class="column-list">
+                            {{!-- Задачи в списке --}}
+                            {{#each users}}
+                            <div class="task card mb-2">
+                                <div class="card-body">
+                                    <a href="/user_show?id={{this._id}}" class="task-done">
+                                        <img class="ring" src="ring.svg" alt="">
+                                    </a>
+                                    
+                                    <p>
+                                      &nbsp; Номер заказа:{{this._id}}, <br>
+                                    &nbsp; ФИО: {{this.firstName}} {{this.lastName}}
+                                    </p>
+                                    
+                                </div>
+                                
+                            </div>
+                            {{/each}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            
+                {{#if show_user}}
+                <div class="col">
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <div class="column-list">
+                            <p>&nbsp;Номер заказа:{{show_user._id}}</p>
+                            <p>&nbsp;Фамилия: {{show_user.lastName}}</p>
+                            <p>&nbsp;Имя: {{show_user.firstName}}</p>
+                            <p>&nbsp;Телефон: {{show_user.tel}}</p>
+                            <p>&nbsp;желаемое время доставки: {{show_user.time}} мин</p>
+                            <p>&nbsp;координаты точки отправки х: {{show_user.Xin}}, y: {{show_user.Yin}}</p>
+                            <p>&nbsp;координаты точки доставки х: {{show_user.Xout}}, y: {{show_user.Yout}}</p>
+                    <a class="btn btn-gr" href="/user_remove?id={{show_user._id}}" role="button">архивировать</a>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            {{/if}}
+
+{{#if contact}}
+<p>Веб-разработчик:<a href="https://t.me/+79065152112"> <img class="logo" src="Logo.png" alt="">  </a></p>
+<p>Программист: <a href="https://t.me/+79157714179"><img class="logo" src="Logo.png" alt=""></a></p>
+<p>Аналитик: <a href="https://t.me/+79046597481"><img class="logo" src="Logo.png" alt=""></a></p>
+{{/if}}
+{{#if oform}}
+{{#if input}}
+<div class="col mb-2" >
+<div class="edit-column card">
+                    <form action="/users_add?ide={{ide}}" method="post">
+                    <div class="card-body">
+                        
+                            
+                        <div class="input-group ">
+                            <div class="column-list">
+                                    <div><input type="text" name="lastName" class="form-control" placeholder="Фамилия"></div>
+
+                                    <div><input type="text" name="firstName" class="form-control" placeholder="Имя"></div>
+
+                                    <div><input type="tel" name="tel" class="form-control" placeholder="Телефон"></div>
+                                    <p>Желаемое время доставки в минутах</p>
+                                    <div><input type="Number" name="time" class="form-control" placeholder="время"></div>
+                                    <div><input step="any" type="Number" name="Xin" class="form-control" placeholder="x точки отправки"></div>
+                                    <div><input step="any" type="Number" name="Yin" class="form-control" placeholder="y точки отправки"></div>
+                                    <div><input step="any" type="Number" name="Xout" class="form-control" placeholder="x точки доставки"></div>
+                                    <div><input step="any" type="Number" name="Yout" class="form-control" placeholder="y точки доставки"></div>
+                                    <button class="btn btn-db" type="submit">Создать</button>
+                                </div>
+                        
+                        
+                        </div>
+                    </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                {{/if}}
+{{#if variant}}
+    {{!-- Список DONE --}}
+            <div class="col mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- Название списка --}}
+                        <h5 class="card-title mb-3">
+                           &nbsp; Дроны доступные для доставки:
+                        </h5>
+
+                        <div class="column-list">
+                            {{!-- Задачи в списке --}}
+                            {{#if drons}}
+                            {{#each drons}}
+                            <div class="task card mb-2">
+                                <div class="card-body">
+                                    <p>
+                                   <img class="ring1" src="ring.svg" alt="">    &nbsp; Идентификатор дрона: {{this._id}},  
+                                   <br>
+                                     <img class="ring1" src="ring.svg" alt="">&nbsp; Время доставки: {{this.time}} мин,
+                                     <br>
+                                    <img class="ring1" src="ring.svg" alt=""> &nbsp;Cтоимость доставки: {{this.costz}} руб
+                                    </p>
+                                </div>
+                                <a class="btn btn-lb" href="/dron_avalible?id={{this._id}}" role="button">Выбрать дрона</a>
+                            </div>
+                            {{/each}}
+                            {{else}}
+                                    <p class="not_found">
+                                        &nbsp;Дронов доступных для данной задачи не найдено
+                                    </p>
+                            {{/if}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+{{/if}}
+
+{{#if admin}}
+
+            {{!-- Список DONE --}}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- Название списка --}}
+                        <h5 class="card-title mb-3">
+                           &nbsp; Дроны <a href="/dron_add" class="btn btn-db">Добавить дрона</a>
+                        </h5>
+
+                        <div class="column-list">
+                            {{!-- Задачи в списке --}}
+                            {{#each drons}}
+                            <div class="task card mb-2">
+                                <div class="card-body">
+                                    <a href="/dron_show?id={{this.id}}" class="task-done">
+                                        <img class="ring" src="ring.svg" alt="">
+                                    </a>
+                                    <p>
+                                        &nbsp;Идентификатор дрона: {{this._id}}, <br>
+                                    &nbsp;расстояние полета на текущем заряде: {{this.chargekm}} км
+                                    </p>
+                                </div>
+                                
+                            </div>
+                            {{/each}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+{{#if show}}
+            <div class="col">
+                
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <div class="column-list">
+                            <p>&nbsp;координаты дрона х: {{show.x}}, y: {{show.y}}</p>
+                            <p>&nbsp;модель дрона: {{show.model}}</p>
+                            <p>&nbsp;стоимость : {{show.cost}} км/руб</p>
+                            <p>&nbsp;заряд дрона: {{show.charge}}%</p>
+                            <p>&nbsp;скорость дрона: {{show.speed}} км/ч</p>
+                            <p>&nbsp;статус дрона: {{#if show.free}} свободен {{else}} занят {{/if}} </p>
+                    <a class="btn btn-gr" href="/dron_remove?id={{show._id}}" role="button">архивировать</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                {{/if}}
+                {{#if add}}
+                <div class="col" >
+                <div class="edit-column card">
+                    <form action="/dron_add" method="post">
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                                    <div>свободен ли дрон  <input class="form-check-input" name="free" type="checkbox">   </div>
+                                    <div><input step="any" type="Number" name="x" class="form-control" placeholder="x:"></div>
+                                    <div><input step="any" type="Number" name="y" class="form-control" placeholder="y:"></div>
+                                    <div><input type="text" name="model" class="form-control" placeholder="модель:"></div>
+                                    <div><input type="Number" name="cost" class="form-control" placeholder="стоимость в руб/км"></div>
+                                    <div><input type="text" name="speed" class="form-control" placeholder="скорость: км/ч"></div>
+                                    <div><input type="Number" name="charge" class="form-control" placeholder="заряд в %:"></div>
+                                    <div><input type="Number" name="akk" class="form-control" placeholder="расстояние на полном аккумуляторе:"></div>
+                                </div>
+                        <div class="column-list">
+                            
+                        <button class="btn btn-db" type="submit">Создать</button>
+                    </form>
+                        </div>
+                    </div>
+                
+                {{/if}}
+            </div>
+            {{/if}}
+
+
+
+
+            {{#if user_archive}}
+
+            {{!-- Список DONE --}}
+            <div class="col ">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- Название списка --}}
+                        <h5 class="card-title mb-3">
+                           &nbsp; Архив пользователей
+                        </h5>
+
+                        <div class="column-list">
+                            {{!-- Задачи в списке --}}
+                            {{#each users}}
+                            <div class="task card mb-2">
+                                <div class="card-body">
+                                    <a href="/user_show_archive?id={{this._id}}" class="task-done">
+                                        <img class="ring" src="ring.svg" alt="">
+                                    </a>
+                                    
+                                    <p>
+                                     &nbsp; Номер заказа: {{this._id}}, <br>
+                            &nbsp;ФИО: {{this.firstName}} {{this.lastName}}
+                                    </p>
+                                    
+                                </div>
+                                
+                            </div>
+                            {{/each}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            
+                {{#if show_user_archive}}
+                <div class="col">
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <div class="column-list">
+                            <p>Номер заказа:{{show_user._id}}</p>
+                            <p>Фамилия: {{show_user.lastName}}</p>
+                            <p>Имя: {{show_user.firstName}}</p>
+                            <p>Телефон: {{show_user.tel}}</p>
+                            <p>желаемое время доставки: {{show_user.time}} мин</p>
+                            <p>координаты точки отправки х: {{show_user.Xin}}, y: {{show_user.Yin}}</p>
+                            <p>координаты точки доставки х: {{show_user.Xout}}, y: {{show_user.Yout}}</p>
+                    <a class="btn btn-lb" href="/user_remove?id={{show_user._id}}" role="button">разархивировать</a>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            {{/if}}
+
+
+{{#if admin_archive}}
+
+            {{!-- Список DONE --}}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        {{!-- Название списка --}}
+                        <h5 class="card-title mb-3">
+                           &nbsp; Архив дронов
+                        </h5>
+
+                        <div class="column-list">
+                            {{!-- Задачи в списке --}}
+                            {{#each drons}}
+                            <div class="task card mb-2">
+                                <div class="card-body">
+                                    <a href="/dron_show_archive?id={{this.id}}" class="task-done">
+                                        <img class="ring" src="ring.svg" alt="">
+                                    </a>
+                                    <p>
+                                       &nbsp; Идентификатор дрона: {{this._id}}
+                                    </p>
+                                    
+                                </div>
+                                
+                            </div>
+                            {{/each}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+{{#if show_archive}}
+            <div class="col">
+                
+                <div class="edit-column card">
+                    <div class="card-body">
+                        <div class="column-list">
+
+                            <p>&nbsp;модель дрона: {{show.model}}</p>
+                            <p>&nbsp;скорость дрона: {{show.speed}} км/ч</p>
+                            <form action="/dron_util?id={{show._id}}" method="post">
+                    <textarea type="text" name="description" class="form-control" placeholder="Описание">{{show.description}}</textarea>
+                    <div><br></div>
+                    <button class="btn btn-db" type="submit">Сохранить описание</button>
+                    </form>
+                    <div><br></div>
+                    <a class="btn btn-lb" href="/dron_remove?id={{show._id}}" role="button">разархивировать</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            {{/if}}
+            {{/if}}
+
+        </div>
+    </div>
+
+</body>
+
+</html>
